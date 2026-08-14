@@ -1,0 +1,1 @@
+javascript:(function(){var e="forced-dark-mode-style",t=document.getElementById(e);if(t)t.remove();else{var n=document.createElement("style");n.id=e,n.innerHTML="html{background:#181a1b!important;filter:invert(1) hue-rotate(180deg)!important;}img,video,picture,canvas,svg,iframe{filter:invert(1) hue-rotate(180deg)!important;}",document.head.appendChild(n)}})();
