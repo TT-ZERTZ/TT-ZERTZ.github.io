@@ -96,6 +96,9 @@
         .old-script-card:active {
             cursor: grabbing;
         }
+        .community-card-main {
+            border-color: var(--section-header); /* Highlights community scripts slightly */
+        }
 
         /* GUI */
         #communityGui {
@@ -210,25 +213,29 @@
             • <strong>Save:</strong> Click and drag a button into your browser's Bookmark Bar to use it on any other website.
         </div>
 
+        <!-- NEW COMMUNITY SECTION ON MAIN PAGE -->
+        <h2>🌍 COMMUNITY UPLOADS</h2>
+        <div class="scripts-grid" id="mainPageCommunityGrid">
+            <!-- Community scripts will be injected here by JavaScript -->
+        </div>
+
         <h2>💻 CODES</h2>
         <div class="scripts-grid">
-            <!-- Example of a working demo script so you can see how to format your actual code -->
-            <a href="javascript:(function(){ document.body.style.filter = 'invert(1)'; })();" class="old-script-card">INVERT PAGE (Working Demo!)</a>
+            <a href="javascript:(function(){ document.body.style.filter = 'invert(1)'; })();" class="old-script-card">INVERT PAGE (Demo!)</a>
             
-            <!-- Replace the console.log blocks with your real script code inside the function brackets -->
-            <a href="javascript:(function(){ console.log('Replace this with AUTOCLICKER code'); })();" class="old-script-card">AUTOCLICKER</a>
-            <a href="javascript:(function(){ console.log('Replace this with BetterSmartLab code'); })();" class="old-script-card">BetterSmartLab</a>
-            <a href="javascript:(function(){ console.log('Replace this with CONTROLLER UI code'); })();" class="old-script-card">CONTROLLER UI</a>
-            <a href="javascript:(function(){ console.log('Replace this with FONT changer code'); })();" class="old-script-card">FONT changer</a>
-            <a href="javascript:(function(){ console.log('Replace this with HISTORY FLOODER code'); })();" class="old-script-card">HISTORY FLOODER</a>
-            <a href="javascript:(function(){ console.log('Replace this with IMAGE CHANGER code'); })();" class="old-script-card">IMAGE CHANGER</a>
-            <a href="javascript:(function(){ console.log('Replace this with KBM OVERLAY code'); })();" class="old-script-card">KBM OVERLAY</a>
-            <a href="javascript:(function(){ console.log('Replace this with MASTER HUB code'); })();" class="old-script-card">MASTER HUB!</a>
-            <a href="javascript:(function(){ console.log('Replace this with PAINTY code'); })();" class="old-script-card">PAINTY</a>
-            <a href="javascript:(function(){ console.log('Replace this with Piano code'); })();" class="old-script-card">Piano by @Krazete</a>
-            <a href="javascript:(function(){ console.log('Replace this with SpoofGUI code'); })();" class="old-script-card">SpoofGUI</a>
-            <a href="javascript:(function(){ console.log('Replace this with Color Changer code'); })();" class="old-script-card">Color Changer</a>
-            <a href="javascript:(function(){ document.body.style.backgroundColor = document.body.style.backgroundColor === 'white' ? '#121212' : 'white'; })();" class="old-script-card">Dark/Light Mode (Working Demo!)</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">AUTOCLICKER</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">BetterSmartLab</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">CONTROLLER UI</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">FONT changer</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">HISTORY FLOODER</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">IMAGE CHANGER</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">KBM OVERLAY</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">MASTER HUB!</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">PAINTY</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">Piano by @Krazete</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">SpoofGUI</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">Color Changer</a>
+            <a href="javascript:(function(){ document.body.style.backgroundColor = document.body.style.backgroundColor === 'white' ? '#121212' : 'white'; })();" class="old-script-card">Dark/Light Mode (Demo!)</a>
         </div>
 
         <h2>🛠️ HACKS</h2>
@@ -304,30 +311,41 @@
 
         // --- State Management ---
         let scripts = JSON.parse(localStorage.getItem('toolbox_scripts')) || [];
-        // Track upvoted script IDs/Names to prevent double voting
         let upvotedScripts = JSON.parse(localStorage.getItem('toolbox_upvotes')) || [];
 
         // --- Render Community Scripts ---
         function renderScripts() {
-            const container = document.getElementById('scriptList');
-            container.innerHTML = ''; 
+            const guiContainer = document.getElementById('scriptList');
+            const mainPageGrid = document.getElementById('mainPageCommunityGrid');
+            
+            guiContainer.innerHTML = ''; 
+            mainPageGrid.innerHTML = ''; 
 
             // Sort scripts by popularity
             scripts.sort((a, b) => b.popularity - a.popularity);
 
             if (scripts.length === 0) {
-                container.innerHTML = '<p style="color:#888;">No scripts uploaded yet. Be the first!</p>';
+                guiContainer.innerHTML = '<p style="color:#888;">No scripts uploaded yet. Be the first!</p>';
+                mainPageGrid.innerHTML = '<p style="color:#888; grid-column: 1 / -1;">No community scripts yet. Open the Community Scripts menu to upload one!</p>';
                 return;
             }
 
             scripts.forEach((script, index) => {
+                // Formatting Code Securely
+                let safeCode = script.code.trim();
+                if (!safeCode.startsWith('javascript:')) {
+                    safeCode = 'javascript:(function(){' + encodeURIComponent(safeCode) + '})();';
+                }
+
+                /* =========================================
+                   1. CREATE CARD FOR THE FULL-PAGE GUI
+                   ========================================= */
                 const card = document.createElement('div');
                 card.className = 'script-card';
 
                 const header = document.createElement('div');
                 header.className = 'script-header';
                 
-                // Title and Category Wrapper
                 const titleWrapper = document.createElement('div');
                 titleWrapper.className = 'script-title-wrapper';
                 
@@ -341,20 +359,17 @@
                 titleWrapper.appendChild(title);
                 titleWrapper.appendChild(badge);
 
-                // Upvote Button Logic
                 const upvoteBtn = document.createElement('button');
-                const hasUpvoted = upvotedScripts.includes(script.name); // Check if user already upvoted
+                const hasUpvoted = upvotedScripts.includes(script.name);
                 
                 upvoteBtn.className = hasUpvoted ? 'upvote-btn active' : 'upvote-btn';
                 upvoteBtn.innerHTML = hasUpvoted ? `✅ Upvoted (${script.popularity})` : `🔥 Upvote (${script.popularity})`;
                 
                 upvoteBtn.onclick = () => {
                     if (hasUpvoted) {
-                        // Remove upvote
                         scripts[index].popularity -= 1;
                         upvotedScripts = upvotedScripts.filter(name => name !== script.name);
                     } else {
-                        // Add upvote
                         scripts[index].popularity += 1;
                         upvotedScripts.push(script.name);
                     }
@@ -365,24 +380,15 @@
                 codeBlock.className = 'code-block';
                 codeBlock.textContent = script.code;
 
-                // Buttons container for Demo and Drag
                 const actionDiv = document.createElement('div');
                 actionDiv.className = 'community-actions';
 
-                // Format the code securely into a javascript: URI
-                let safeCode = script.code.trim();
-                if (!safeCode.startsWith('javascript:')) {
-                    safeCode = 'javascript:(function(){' + encodeURIComponent(safeCode) + '})();';
-                }
-
-                // Demo Click Button
                 const demoBtn = document.createElement('a');
                 demoBtn.className = 'btn';
                 demoBtn.style.marginBottom = '0';
                 demoBtn.textContent = '▶ Run Demo';
                 demoBtn.href = safeCode;
 
-                // Drag to Bookmark Button
                 const dragBtn = document.createElement('a');
                 dragBtn.className = 'btn';
                 dragBtn.style.backgroundColor = 'var(--section-header)';
@@ -398,7 +404,17 @@
                 card.appendChild(header);
                 card.appendChild(codeBlock);
                 card.appendChild(actionDiv);
-                container.appendChild(card);
+                guiContainer.appendChild(card);
+
+                /* =========================================
+                   2. CREATE BUTTON FOR THE MAIN PAGE
+                   ========================================= */
+                const mainPageCard = document.createElement('a');
+                mainPageCard.className = 'old-script-card community-card-main';
+                mainPageCard.href = safeCode;
+                mainPageCard.textContent = `${script.name} (🔥 ${script.popularity})`;
+                
+                mainPageGrid.appendChild(mainPageCard);
             });
         }
 
@@ -417,7 +433,6 @@
             const codeInput = document.getElementById('scriptCode').value.trim();
 
             if (nameInput && codeInput) {
-                // Prevent duplicate names to keep upvote tracking accurate
                 if (scripts.some(s => s.name.toLowerCase() === nameInput.toLowerCase())) {
                     alert("A script with this name already exists. Please choose a different name.");
                     return;
