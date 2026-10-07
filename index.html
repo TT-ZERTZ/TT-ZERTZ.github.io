@@ -10,6 +10,7 @@
             --card-bg: #1e1e1e;
             --primary: #bb86fc;
             --text: #e0e0e0;
+            --section-header: #03dac6;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,14 +20,27 @@
             padding: 20px;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
-        h1, h2 {
+        h1 {
             color: var(--primary);
             border-bottom: 1px solid #333;
             padding-bottom: 10px;
         }
+        h2 {
+            color: var(--section-header);
+            margin-top: 30px;
+        }
+        .instructions {
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+        
         /* Main Page Buttons */
         .btn {
             background-color: var(--primary);
@@ -48,10 +62,13 @@
             width: 100%;
             padding: 15px;
             font-size: 18px;
-            background-color: #03dac6;
+            background-color: var(--section-header);
+            margin-bottom: 30px;
+            text-align: center;
+            text-decoration: none;
         }
         
-        /* Old Scripts Grid */
+        /* Old Scripts Grid - Updated to be Drag-and-Drop Bookmarklets */
         .scripts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -63,15 +80,24 @@
             border-radius: 8px;
             text-align: center;
             border: 1px solid #333;
-            cursor: pointer;
+            cursor: grab;
+            font-weight: bold;
+            transition: border-color 0.2s, transform 0.2s;
+            display: block;
+            color: var(--text);
+            text-decoration: none;
         }
         .old-script-card:hover {
             border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .old-script-card:active {
+            cursor: grabbing;
         }
 
         /* Full Page Community GUI (Hidden by default) */
         #communityGui {
-            display: none; /* Hidden on load */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -79,7 +105,7 @@
             height: 100vh;
             background-color: var(--bg-color);
             z-index: 1000;
-            overflow-y: auto; /* Allow scrolling inside the GUI */
+            overflow-y: auto;
             padding: 30px 20px;
             box-sizing: border-box;
         }
@@ -90,9 +116,6 @@
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
         }
         .community-container {
             max-width: 800px;
@@ -114,7 +137,7 @@
             padding: 15px;
             margin-bottom: 15px;
             border-radius: 8px;
-            border-left: 4px solid #03dac6;
+            border-left: 4px solid var(--section-header);
         }
         .script-header {
             display: flex;
@@ -137,14 +160,14 @@
         }
         .upvote-btn {
             background-color: transparent;
-            border: 1px solid #03dac6;
-            color: #03dac6;
+            border: 1px solid var(--section-header);
+            color: var(--section-header);
             padding: 5px 10px;
             border-radius: 4px;
             cursor: pointer;
         }
         .upvote-btn:hover {
-            background-color: #03dac6;
+            background-color: var(--section-header);
             color: #000;
         }
     </style>
@@ -158,17 +181,53 @@
         <!-- Button to open the full-page GUI -->
         <button class="btn btn-large" onclick="openCommunityGui()">🌐 Open Community Scripts & Upload</button>
 
-        <h2>Built-in Scripts & Hacks</h2>
+        <div class="instructions">
+            💡 <strong>How to use:</strong> Click any script below to <strong>Demo</strong> it right now, or <strong>Drag & Drop</strong> the button directly into your browser's Bookmark Bar to save it for later!
+        </div>
+
+        <h2>💻 CODES</h2>
+        <!-- Replace the alert('...') with your actual minified JavaScript code inside the href="javascript:..." tag -->
         <div class="scripts-grid">
-            <!-- Placeholder cards based on your zip file contents -->
-            <div class="old-script-card">AutoClicker</div>
-            <div class="old-script-card">Spotify No Ads</div>
-            <div class="old-script-card">BetterTube</div>
-            <div class="old-script-card">Blooket GUI</div>
-            <div class="old-script-card">Universal AI</div>
-            <div class="old-script-card">Maths Pathways</div>
-            <div class="old-script-card">History Flooder</div>
-            <div class="old-script-card">SpoofGUI</div>
+            <a href="javascript:alert('Running AUTOCLICKER... \n(Replace this alert with your actual script code!)');" class="old-script-card">AUTOCLICKER</a>
+            <a href="javascript:alert('Running BetterSmartLab...');" class="old-script-card">BetterSmartLab</a>
+            <a href="javascript:alert('Running CONTROLLER UI...');" class="old-script-card">CONTROLLER UI</a>
+            <a href="javascript:alert('Running FONT changer...');" class="old-script-card">FONT changer</a>
+            <a href="javascript:alert('Running HISTORY FLOODER...');" class="old-script-card">HISTORY FLOODER</a>
+            <a href="javascript:alert('Running IMAGE CHANGER...');" class="old-script-card">IMAGE CHANGER</a>
+            <a href="javascript:alert('Running INVERT PAGE...');" class="old-script-card">INVERT PAGE</a>
+            <a href="javascript:alert('Running KBM OVERLAY...');" class="old-script-card">KBM OVERLAY</a>
+            <a href="javascript:alert('Running MASTER HUB!...');" class="old-script-card">MASTER HUB!</a>
+            <a href="javascript:alert('Running PAINTY...');" class="old-script-card">PAINTY</a>
+            <a href="javascript:alert('Running Piano...');" class="old-script-card">Piano by @Krazete</a>
+            <a href="javascript:alert('Running SpoofGUI...');" class="old-script-card">SpoofGUI</a>
+            <a href="javascript:alert('Running Color Changer...');" class="old-script-card">Color Changer</a>
+            <a href="javascript:alert('Running Dark & Light Mode...');" class="old-script-card">Dark & Light Mode</a>
+        </div>
+
+        <h2>🛠️ HACKS</h2>
+        <div class="scripts-grid">
+            <a href="javascript:alert('Running BetterTube...');" class="old-script-card">BetterTube</a>
+            <a href="javascript:alert('Running Custom Right Click...');" class="old-script-card">Custom Right Click</a>
+            <a href="javascript:alert('Running MATHS PATHWAYS...');" class="old-script-card">MATHS PATHWAYS (Luv u Josh)</a>
+            <a href="javascript:alert('Running QUIZLET...');" class="old-script-card">QUIZLET</a>
+            <a href="javascript:alert('Running Spotify No Ads...');" class="old-script-card">Spotify No Ads</a>
+            <a href="javascript:alert('Running Universal AI...');" class="old-script-card">Universal AI</a>
+            <a href="javascript:alert('Running Universal Auto Answer...');" class="old-script-card">Universal Auto Answer</a>
+            <a href="javascript:alert('Running Universal Fullscreen Bypass...');" class="old-script-card">Fullscreen Bypass</a>
+            <a href="javascript:alert('Running plinko-web-game...');" class="old-script-card">plinko-web-game</a>
+        </div>
+
+        <h2>🎮 BLOOKET HACKS</h2>
+        <div class="scripts-grid">
+            <a href="javascript:alert('Running Blooket GUI...');" class="old-script-card">Blooket GUI</a>
+            <a href="javascript:alert('Running Antiban...');" class="old-script-card">Antiban</a>
+            <a href="javascript:alert('Running Blooket Basic...');" class="old-script-card">Blooket Basic</a>
+        </div>
+
+        <h2>🌐 WEBSITE & EXTRAS</h2>
+        <div class="scripts-grid">
+            <a href="javascript:alert('Running BROWSERS...');" class="old-script-card">BROWSERS</a>
+            <a href="javascript:alert('Running FREE AI...');" class="old-script-card">FREE AI.</a>
         </div>
     </div>
 
@@ -178,16 +237,16 @@
         <div class="community-container">
             <button class="btn" onclick="closeCommunityGui()">← Back to Main Menu</button>
             
-            <h1>Community Scripts</h1>
+            <h1 style="color: var(--section-header);">Community Scripts</h1>
 
             <div class="upload-section">
-                <h2>Upload a Script</h2>
+                <h2 style="margin-top: 0;">Upload a Script</h2>
                 <form id="uploadForm">
                     <label for="scriptName">Script Name:</label>
                     <input type="text" id="scriptName" placeholder="e.g., Custom Theme Hack" required>
                     
                     <label for="scriptCode">JavaScript Code:</label>
-                    <textarea id="scriptCode" rows="6" placeholder="Paste your code here..." required></textarea>
+                    <textarea id="scriptCode" rows="6" placeholder="Paste your minified javascript:(function(){...})() code here..." required></textarea>
                     
                     <button class="btn" type="submit">Publish Script</button>
                 </form>
@@ -206,12 +265,12 @@
         // --- GUI Toggle Functions ---
         function openCommunityGui() {
             document.getElementById('communityGui').style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Stop background scrolling
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeCommunityGui() {
             document.getElementById('communityGui').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restore background scrolling
+            document.body.style.overflow = 'auto'; 
         }
 
         // --- Community Script Logic ---
@@ -252,10 +311,26 @@
                 codeBlock.className = 'code-block';
                 codeBlock.textContent = script.code;
 
+                // Add a Draggable Bookmarklet Button for Community Scripts too
+                const dragBtn = document.createElement('a');
+                dragBtn.className = 'btn';
+                dragBtn.style.display = 'inline-block';
+                dragBtn.style.marginTop = '10px';
+                dragBtn.style.backgroundColor = 'var(--section-header)';
+                dragBtn.textContent = 'Drag this button to Bookmarks';
+                
+                // Format the user code safely into a javascript: URI
+                let safeCode = script.code;
+                if (!safeCode.startsWith('javascript:')) {
+                    safeCode = 'javascript:(function(){' + encodeURIComponent(safeCode) + '})();';
+                }
+                dragBtn.href = safeCode;
+
                 header.appendChild(title);
                 header.appendChild(upvoteBtn);
                 card.appendChild(header);
                 card.appendChild(codeBlock);
+                card.appendChild(dragBtn);
                 container.appendChild(card);
             });
         }
