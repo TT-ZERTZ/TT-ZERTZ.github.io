@@ -11,6 +11,7 @@
             --primary: #bb86fc;
             --text: #e0e0e0;
             --section-header: #03dac6;
+            --danger: #cf6679;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -39,9 +40,10 @@
             border-left: 4px solid var(--primary);
             margin-bottom: 20px;
             font-size: 15px;
+            line-height: 1.5;
         }
         
-        /* Main Page Buttons */
+        /* Buttons */
         .btn {
             background-color: var(--primary);
             color: #000;
@@ -68,7 +70,7 @@
             text-decoration: none;
         }
         
-        /* Old Scripts Grid - Updated to be Drag-and-Drop Bookmarklets */
+        /* Grid */
         .scripts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -95,7 +97,7 @@
             cursor: grabbing;
         }
 
-        /* Full Page Community GUI (Hidden by default) */
+        /* GUI */
         #communityGui {
             display: none;
             position: fixed;
@@ -110,7 +112,7 @@
             box-sizing: border-box;
         }
 
-        /* Form and Card Styles for Community GUI */
+        /* Forms & Community Cards */
         .upload-section {
             background-color: var(--card-bg);
             padding: 20px;
@@ -121,7 +123,7 @@
             max-width: 800px;
             margin: 0 auto;
         }
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             background-color: #2d2d2d;
             border: 1px solid #444;
@@ -130,6 +132,9 @@
             margin-bottom: 15px;
             border-radius: 4px;
             box-sizing: border-box;
+            font-family: inherit;
+        }
+        textarea {
             font-family: monospace;
         }
         .script-card {
@@ -143,11 +148,24 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .script-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .script-header h3 {
             margin: 0;
             color: #fff;
-            border: none;
+        }
+        .category-badge {
+            background-color: #333;
+            color: #ccc;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 12px;
         }
         .code-block {
             background-color: #000;
@@ -157,77 +175,80 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             margin: 15px 0;
+            font-family: monospace;
         }
         .upvote-btn {
             background-color: transparent;
             border: 1px solid var(--section-header);
             color: var(--section-header);
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
+            font-weight: bold;
         }
-        .upvote-btn:hover {
+        .upvote-btn.active {
             background-color: var(--section-header);
             color: #000;
+        }
+        .community-actions {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- ================= MAIN PAGE (OLD SCRIPTS) ================= -->
+    <!-- ================= MAIN PAGE (BUILT-IN SCRIPTS) ================= -->
     <div class="container" id="mainPage">
         <h1>JS Toolbox</h1>
         
-        <!-- Button to open the full-page GUI -->
         <button class="btn btn-large" onclick="openCommunityGui()">🌐 Open Community Scripts & Upload</button>
 
         <div class="instructions">
-            💡 <strong>How to use:</strong> Click any script below to <strong>Demo</strong> it right now, or <strong>Drag & Drop</strong> the button directly into your browser's Bookmark Bar to save it for later!
+            💡 <strong>How to use:</strong><br>
+            • <strong>Demo:</strong> Click any script button to run it instantly on this page.<br>
+            • <strong>Save:</strong> Click and drag a button into your browser's Bookmark Bar to use it on any other website.
         </div>
 
         <h2>💻 CODES</h2>
-        <!-- Replace the alert('...') with your actual minified JavaScript code inside the href="javascript:..." tag -->
         <div class="scripts-grid">
-            <a href="javascript:alert('Running AUTOCLICKER... \n(Replace this alert with your actual script code!)');" class="old-script-card">AUTOCLICKER</a>
-            <a href="javascript:alert('Running BetterSmartLab...');" class="old-script-card">BetterSmartLab</a>
-            <a href="javascript:alert('Running CONTROLLER UI...');" class="old-script-card">CONTROLLER UI</a>
-            <a href="javascript:alert('Running FONT changer...');" class="old-script-card">FONT changer</a>
-            <a href="javascript:alert('Running HISTORY FLOODER...');" class="old-script-card">HISTORY FLOODER</a>
-            <a href="javascript:alert('Running IMAGE CHANGER...');" class="old-script-card">IMAGE CHANGER</a>
-            <a href="javascript:alert('Running INVERT PAGE...');" class="old-script-card">INVERT PAGE</a>
-            <a href="javascript:alert('Running KBM OVERLAY...');" class="old-script-card">KBM OVERLAY</a>
-            <a href="javascript:alert('Running MASTER HUB!...');" class="old-script-card">MASTER HUB!</a>
-            <a href="javascript:alert('Running PAINTY...');" class="old-script-card">PAINTY</a>
-            <a href="javascript:alert('Running Piano...');" class="old-script-card">Piano by @Krazete</a>
-            <a href="javascript:alert('Running SpoofGUI...');" class="old-script-card">SpoofGUI</a>
-            <a href="javascript:alert('Running Color Changer...');" class="old-script-card">Color Changer</a>
-            <a href="javascript:alert('Running Dark & Light Mode...');" class="old-script-card">Dark & Light Mode</a>
+            <!-- Example of a working demo script so you can see how to format your actual code -->
+            <a href="javascript:(function(){ document.body.style.filter = 'invert(1)'; })();" class="old-script-card">INVERT PAGE (Working Demo!)</a>
+            
+            <!-- Replace the console.log blocks with your real script code inside the function brackets -->
+            <a href="javascript:(function(){ console.log('Replace this with AUTOCLICKER code'); })();" class="old-script-card">AUTOCLICKER</a>
+            <a href="javascript:(function(){ console.log('Replace this with BetterSmartLab code'); })();" class="old-script-card">BetterSmartLab</a>
+            <a href="javascript:(function(){ console.log('Replace this with CONTROLLER UI code'); })();" class="old-script-card">CONTROLLER UI</a>
+            <a href="javascript:(function(){ console.log('Replace this with FONT changer code'); })();" class="old-script-card">FONT changer</a>
+            <a href="javascript:(function(){ console.log('Replace this with HISTORY FLOODER code'); })();" class="old-script-card">HISTORY FLOODER</a>
+            <a href="javascript:(function(){ console.log('Replace this with IMAGE CHANGER code'); })();" class="old-script-card">IMAGE CHANGER</a>
+            <a href="javascript:(function(){ console.log('Replace this with KBM OVERLAY code'); })();" class="old-script-card">KBM OVERLAY</a>
+            <a href="javascript:(function(){ console.log('Replace this with MASTER HUB code'); })();" class="old-script-card">MASTER HUB!</a>
+            <a href="javascript:(function(){ console.log('Replace this with PAINTY code'); })();" class="old-script-card">PAINTY</a>
+            <a href="javascript:(function(){ console.log('Replace this with Piano code'); })();" class="old-script-card">Piano by @Krazete</a>
+            <a href="javascript:(function(){ console.log('Replace this with SpoofGUI code'); })();" class="old-script-card">SpoofGUI</a>
+            <a href="javascript:(function(){ console.log('Replace this with Color Changer code'); })();" class="old-script-card">Color Changer</a>
+            <a href="javascript:(function(){ document.body.style.backgroundColor = document.body.style.backgroundColor === 'white' ? '#121212' : 'white'; })();" class="old-script-card">Dark/Light Mode (Working Demo!)</a>
         </div>
 
         <h2>🛠️ HACKS</h2>
         <div class="scripts-grid">
-            <a href="javascript:alert('Running BetterTube...');" class="old-script-card">BetterTube</a>
-            <a href="javascript:alert('Running Custom Right Click...');" class="old-script-card">Custom Right Click</a>
-            <a href="javascript:alert('Running MATHS PATHWAYS...');" class="old-script-card">MATHS PATHWAYS (Luv u Josh)</a>
-            <a href="javascript:alert('Running QUIZLET...');" class="old-script-card">QUIZLET</a>
-            <a href="javascript:alert('Running Spotify No Ads...');" class="old-script-card">Spotify No Ads</a>
-            <a href="javascript:alert('Running Universal AI...');" class="old-script-card">Universal AI</a>
-            <a href="javascript:alert('Running Universal Auto Answer...');" class="old-script-card">Universal Auto Answer</a>
-            <a href="javascript:alert('Running Universal Fullscreen Bypass...');" class="old-script-card">Fullscreen Bypass</a>
-            <a href="javascript:alert('Running plinko-web-game...');" class="old-script-card">plinko-web-game</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">BetterTube</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">Custom Right Click</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">MATHS PATHWAYS</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">QUIZLET</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">Spotify No Ads</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">Universal AI</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">Universal Auto Answer</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">Fullscreen Bypass</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">plinko-web-game</a>
         </div>
 
         <h2>🎮 BLOOKET HACKS</h2>
         <div class="scripts-grid">
-            <a href="javascript:alert('Running Blooket GUI...');" class="old-script-card">Blooket GUI</a>
-            <a href="javascript:alert('Running Antiban...');" class="old-script-card">Antiban</a>
-            <a href="javascript:alert('Running Blooket Basic...');" class="old-script-card">Blooket Basic</a>
-        </div>
-
-        <h2>🌐 WEBSITE & EXTRAS</h2>
-        <div class="scripts-grid">
-            <a href="javascript:alert('Running BROWSERS...');" class="old-script-card">BROWSERS</a>
-            <a href="javascript:alert('Running FREE AI...');" class="old-script-card">FREE AI.</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">Blooket GUI</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">Antiban</a>
+            <a href="javascript:(function(){ /* YOUR CODE HERE */ })();" class="old-script-card">Blooket Basic</a>
         </div>
     </div>
 
@@ -243,12 +264,21 @@
                 <h2 style="margin-top: 0;">Upload a Script</h2>
                 <form id="uploadForm">
                     <label for="scriptName">Script Name:</label>
-                    <input type="text" id="scriptName" placeholder="e.g., Custom Theme Hack" required>
+                    <input type="text" id="scriptName" placeholder="e.g., Auto Answer Hack" required>
                     
+                    <label for="scriptCategory">Category:</label>
+                    <select id="scriptCategory">
+                        <option value="Uncategorised">Uncategorised</option>
+                        <option value="Codes">Codes</option>
+                        <option value="Hacks">Hacks</option>
+                        <option value="Blooket">Blooket</option>
+                        <option value="Visual/UI">Visual / UI</option>
+                    </select>
+
                     <label for="scriptCode">JavaScript Code:</label>
-                    <textarea id="scriptCode" rows="6" placeholder="Paste your minified javascript:(function(){...})() code here..." required></textarea>
+                    <textarea id="scriptCode" rows="6" placeholder="Paste your script code here..." required></textarea>
                     
-                    <button class="btn" type="submit">Publish Script</button>
+                    <button class="btn" type="submit" style="background-color: var(--section-header);">Publish Script</button>
                 </form>
             </div>
 
@@ -258,7 +288,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- ================= JAVASCRIPT ================= -->
     <script>
@@ -273,9 +302,12 @@
             document.body.style.overflow = 'auto'; 
         }
 
-        // --- Community Script Logic ---
+        // --- State Management ---
         let scripts = JSON.parse(localStorage.getItem('toolbox_scripts')) || [];
+        // Track upvoted script IDs/Names to prevent double voting
+        let upvotedScripts = JSON.parse(localStorage.getItem('toolbox_upvotes')) || [];
 
+        // --- Render Community Scripts ---
         function renderScripts() {
             const container = document.getElementById('scriptList');
             container.innerHTML = ''; 
@@ -295,15 +327,37 @@
                 const header = document.createElement('div');
                 header.className = 'script-header';
                 
+                // Title and Category Wrapper
+                const titleWrapper = document.createElement('div');
+                titleWrapper.className = 'script-title-wrapper';
+                
                 const title = document.createElement('h3');
                 title.textContent = script.name; 
+                
+                const badge = document.createElement('span');
+                badge.className = 'category-badge';
+                badge.textContent = script.category || "Uncategorised";
+                
+                titleWrapper.appendChild(title);
+                titleWrapper.appendChild(badge);
 
+                // Upvote Button Logic
                 const upvoteBtn = document.createElement('button');
-                upvoteBtn.className = 'upvote-btn';
-                upvoteBtn.innerHTML = `🔥 Upvote (${script.popularity})`;
+                const hasUpvoted = upvotedScripts.includes(script.name); // Check if user already upvoted
+                
+                upvoteBtn.className = hasUpvoted ? 'upvote-btn active' : 'upvote-btn';
+                upvoteBtn.innerHTML = hasUpvoted ? `✅ Upvoted (${script.popularity})` : `🔥 Upvote (${script.popularity})`;
                 
                 upvoteBtn.onclick = () => {
-                    scripts[index].popularity += 1;
+                    if (hasUpvoted) {
+                        // Remove upvote
+                        scripts[index].popularity -= 1;
+                        upvotedScripts = upvotedScripts.filter(name => name !== script.name);
+                    } else {
+                        // Add upvote
+                        scripts[index].popularity += 1;
+                        upvotedScripts.push(script.name);
+                    }
                     saveAndRender();
                 };
 
@@ -311,44 +365,67 @@
                 codeBlock.className = 'code-block';
                 codeBlock.textContent = script.code;
 
-                // Add a Draggable Bookmarklet Button for Community Scripts too
-                const dragBtn = document.createElement('a');
-                dragBtn.className = 'btn';
-                dragBtn.style.display = 'inline-block';
-                dragBtn.style.marginTop = '10px';
-                dragBtn.style.backgroundColor = 'var(--section-header)';
-                dragBtn.textContent = 'Drag this button to Bookmarks';
-                
-                // Format the user code safely into a javascript: URI
-                let safeCode = script.code;
+                // Buttons container for Demo and Drag
+                const actionDiv = document.createElement('div');
+                actionDiv.className = 'community-actions';
+
+                // Format the code securely into a javascript: URI
+                let safeCode = script.code.trim();
                 if (!safeCode.startsWith('javascript:')) {
                     safeCode = 'javascript:(function(){' + encodeURIComponent(safeCode) + '})();';
                 }
+
+                // Demo Click Button
+                const demoBtn = document.createElement('a');
+                demoBtn.className = 'btn';
+                demoBtn.style.marginBottom = '0';
+                demoBtn.textContent = '▶ Run Demo';
+                demoBtn.href = safeCode;
+
+                // Drag to Bookmark Button
+                const dragBtn = document.createElement('a');
+                dragBtn.className = 'btn';
+                dragBtn.style.backgroundColor = 'var(--section-header)';
+                dragBtn.style.marginBottom = '0';
+                dragBtn.textContent = '≡ Drag to Bookmarks';
                 dragBtn.href = safeCode;
 
-                header.appendChild(title);
+                actionDiv.appendChild(demoBtn);
+                actionDiv.appendChild(dragBtn);
+
+                header.appendChild(titleWrapper);
                 header.appendChild(upvoteBtn);
                 card.appendChild(header);
                 card.appendChild(codeBlock);
-                card.appendChild(dragBtn);
+                card.appendChild(actionDiv);
                 container.appendChild(card);
             });
         }
 
         function saveAndRender() {
             localStorage.setItem('toolbox_scripts', JSON.stringify(scripts));
+            localStorage.setItem('toolbox_upvotes', JSON.stringify(upvotedScripts));
             renderScripts();
         }
 
+        // --- Upload Form Handler ---
         document.getElementById('uploadForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const nameInput = document.getElementById('scriptName').value.trim();
+            const categoryInput = document.getElementById('scriptCategory').value;
             const codeInput = document.getElementById('scriptCode').value.trim();
 
             if (nameInput && codeInput) {
+                // Prevent duplicate names to keep upvote tracking accurate
+                if (scripts.some(s => s.name.toLowerCase() === nameInput.toLowerCase())) {
+                    alert("A script with this name already exists. Please choose a different name.");
+                    return;
+                }
+
                 scripts.push({
                     name: nameInput,
+                    category: categoryInput,
                     code: codeInput,
                     popularity: 0 
                 });
@@ -358,7 +435,7 @@
             }
         });
 
-        // Initial render for community scripts
+        // Initial render
         renderScripts();
     </script>
 </body>
